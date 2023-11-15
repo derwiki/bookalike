@@ -65,14 +65,17 @@ def rewrite_and_save_chunks(chunks, output_filename):
     for i, chunk in enumerate(chunks):
         if i == 0:
             input(f"Chunks created: {len(chunks)}, press any key to continue")
+            continue  # first chapter is needless preamble
+
         original_token_count = len(list(tokenize(chunk)))
         logger.info(f"Token count of the chunk to be sent to LLM: {original_token_count}")
         rewritten_chunk, elapsed_time = query(
             f"""
             Please rewrite this text in original words, keeping the overall themes, values, lessons the same. 
-            Avoid rewriting text that is already well-written, copyrighted, sensitive, controversial, or doesn't need to be rewritten. 
             Ensure the rewritten text is clear, accurate, consistent, relevant, up-to-date, well-written, and not repetitive. 
-            Examples should be updated. 
+            All names should be replaced with new names.
+            Any reference to the author of the book should be replaced with John Smith.
+            Examples should be updated as possible in the context of 2023.
             Text:\n{chunk}
         """
         )
