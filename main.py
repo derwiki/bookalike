@@ -121,6 +121,7 @@ def rewrite_and_save_chunks(chunks, output_filename):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("input_file", help="The input text file")
+    parser.add_argument("-ni", "--non-interactive", action="store_true", help="Run in non-interactive mode (skip any input prompts)")
     args = parser.parse_args()
 
     input_file = args.input_file
@@ -136,6 +137,8 @@ def main():
     else:
         chunks = split_into_chunks(book, input_file)
     logger.info(f"Number of chunks: {len(chunks)}")
+    if not args.non_interactive:
+        input("Press any key to continue")
     rewrite_and_save_chunks(chunks, output_file)
 
 
