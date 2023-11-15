@@ -1,3 +1,6 @@
+import json
+import os
+
 import tiktoken
 from openai import OpenAI
 
@@ -57,6 +60,8 @@ def split_into_chunks(text):
             current_chunk += "\n" + line
     if current_chunk:
         chunks.append(current_chunk)
+    with open("htwf-chunks.json", "w") as f:
+        json.dump(chunks, f, indent=2)
     return chunks
 
 
@@ -68,7 +73,9 @@ def rewrite_and_save_chunks(chunks, output_filename):
             continue  # first chapter is needless preamble
 
         original_token_count = len(list(tokenize(chunk)))
-        logger.info(f"Token count of the chunk to be sent to LLM: {original_token_count}")
+        logger.info(
+            f"Token count of the chunk to be sent to LLM: {original_token_count}"
+        )
         rewritten_chunk, elapsed_time = query(
             f"""
            Start of Input Text:
@@ -103,7 +110,11 @@ def rewrite_and_save_chunks(chunks, output_filename):
 
 def main():
     book = load_book("htwf.txt")
-    chunks = split_into_chunks(book)
+    if os.path.exists("htwf-chunks.json"):
+        with open("htwf-chunks.json", "r") as f:
+            chunks = json.load(f)
+    else:
+        chunks = split_into_chunks(book)
     logger.info(f"Number of chunks: {len(chunks)}")
     rewrite_and_save_chunks(chunks, "htwf-new.txt")
 
