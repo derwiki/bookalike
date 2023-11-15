@@ -71,12 +71,8 @@ def rewrite_and_save_chunks(chunks, output_filename):
     total_time = 0
     for i, chunk in enumerate(chunks):
         logger.info(f"Chunks loaded: {len(chunks)}, ready to begin!")
-        if i == 0:
-            logger.info("Skipping 'chapter' before preface")
-            continue
-
-        if i == 1:
-            logger.info("Skipping preface")
+        if i in skip_chapters:
+            logger.info(f"Skipping chapter {i}")
             continue
 
         original_token_count = len(list(tokenize(chunk)))
@@ -122,7 +118,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("input_file", help="The input text file")
     parser.add_argument("-ni", "--non-interactive", action="store_true", help="Run in non-interactive mode (skip any input prompts)")
+    parser.add_argument("--skip-chapters", type=str, help="Comma separated list of chapters to exclude")
     args = parser.parse_args()
+    skip_chapters = [int(ch) for ch in args.skip_chapters.split(',')] if args.skip_chapters else []
 
     input_file = args.input_file
     output_file = (
