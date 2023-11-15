@@ -70,7 +70,12 @@ def rewrite_and_save_chunks(chunks, output_filename):
     for i, chunk in enumerate(chunks):
         if i == 0:
             input(f"Chunks created: {len(chunks)}, press any key to continue")
-            continue  # first chapter is needless preamble
+            logger.info("Skipping 'chapter' before preface")
+            continue
+
+        if i == 1:
+            logger.info("Skipping preface")
+            continue
 
         original_token_count = len(list(tokenize(chunk)))
         logger.info(
@@ -82,7 +87,7 @@ def rewrite_and_save_chunks(chunks, output_filename):
            {chunk}
            End of Input Text.
            
-           Length Reduction: Condense the text to make it about 25% shorter than the original.
+           Length Reduction: Condense the text to make it about 10% shorter than the original.
            Anonymize Names: Replace all personal names with generic ones (e.g., "Dale Carnegie" becomes "John Smith").
            Alter Institutions and Locations: Change the names of specific institutions and locations to more generic or fictional ones (e.g., "University of Chicago" to "University of the Midwest").
            Modify References to Notable Figures: Replace names of famous historical or public figures with fictional names (e.g., "Franklin D. Roosevelt" becomes "Jane Doe").
@@ -92,9 +97,10 @@ def rewrite_and_save_chunks(chunks, output_filename):
            Check for Clarity: Ensure that the rewritten text is clear and easy to understand.
            Review for Consistency: Make sure that any changes in names or places are consistently applied throughout the text. 
            
-           Condensed, updated Text:
+           Start of Condensed Text:
         """
         )
+        rewritten_chunk = rewritten_chunk.replace("End of Condensed Text.", "")
         rewritten_token_count = len(list(tokenize(rewritten_chunk)))
         logger.info(
             f"Finished rewriting chapter {i + 1}. Original token count: {original_token_count}, Rewritten token count: {rewritten_token_count}"
@@ -104,6 +110,7 @@ def rewrite_and_save_chunks(chunks, output_filename):
         logger.info(f"Time elapsed so far: {total_time} seconds")
         logger.info(f"Estimated total time: {estimated_time} seconds")
         with open(output_filename, "a+", encoding="utf-8") as output_file:
+            output_file.write(f"Chapter {i}\n\n")
             output_file.write(rewritten_chunk + "\n\n")
         input("Chunk written, press any key to continue")
 
