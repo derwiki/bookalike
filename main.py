@@ -29,11 +29,13 @@ def split_into_chunks(text):
     max_tokens = 64000
     chunks = []
     current_chunk = ""
+    import re
+    chapter_pattern = re.compile(r'^(\d+)$')
     for line in text.split("\n"):
         tokens = tokenizer.tokenize(line)
         if (
             len(tokens) + len(tokenizer.tokenize(current_chunk)) > max_tokens
-            or "CHAPTER" in line.upper()
+            or chapter_pattern.match(line)
         ):
             if current_chunk:
                 chunks.append(current_chunk)
