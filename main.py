@@ -24,8 +24,14 @@ def load_book(filename):
         return file.read()
 
 
+TOKENIZER = tiktoken.encoding_for_model("gpt-4")
+
+
+def tokenize(s: str) -> list:
+    return TOKENIZER.encode(s)
+
+
 def split_into_chunks(text):
-    tokenizer = tiktoken.TikToken()
     max_tokens = 64000
     chunks = []
     current_chunk = ""
@@ -34,9 +40,9 @@ def split_into_chunks(text):
     chapter_pattern = re.compile(r"^(\d+)$")
     chapter_count = 0
     for line in text.split("\n"):
-        tokens = tokenizer.tokenize(line)
+        tokens = tokenize(line)
         if len(tokens) + len(
-            tokenizer.tokenize(current_chunk)
+            tokenize(current_chunk)
         ) > max_tokens or chapter_pattern.match(line):
             chapter_count += 1
             logger.info(
@@ -54,10 +60,11 @@ def split_into_chunks(text):
 
 def rewrite_and_save_chunks(chunks, output_filename):
     total_time = 0
-    tokenizer = tiktoken.Tokenizer()
     with open(output_filename, "w", encoding="utf-8") as output_file:
         for i, chunk in enumerate(chunks):
-            original_token_count = len(list(tokenizer.tokenize(chunk)))
+            if i == 0:
+                input(f"Chunks created: {len(chunks)}, press any key to continue")
+            original_token_count = len(list(tokenize(chunk)))
             rewritten_chunk, elapsed_time = query(
                 f"""
                 Please rewrite this text in original words, keeping the overall themes, values, lessons the same. 
@@ -67,7 +74,7 @@ def rewrite_and_save_chunks(chunks, output_filename):
                 Text:\n{chunk}
             """
             )
-            rewritten_token_count = len(list(tokenizer.tokenize(rewritten_chunk)))
+            rewritten_token_count = len(list(tokenize(rewritten_chunk)))
             logger.info(
                 f"Finished rewriting chapter {i + 1}. Original token count: {original_token_count}, Rewritten token count: {rewritten_token_count}"
             )
@@ -76,6 +83,7 @@ def rewrite_and_save_chunks(chunks, output_filename):
             logger.info(f"Time elapsed so far: {total_time} seconds")
             logger.info(f"Estimated total time: {estimated_time} seconds")
             output_file.write(rewritten_chunk + "\n\n")
+            input("Chunk written, press any key to continue")
 
 
 def main():
