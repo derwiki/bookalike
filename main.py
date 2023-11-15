@@ -67,7 +67,7 @@ def split_into_chunks(text, input_file):
     return chunks
 
 
-def rewrite_and_save_chunks(chunks, output_filename, skip_chapters, fast):
+def rewrite_and_save_chunks(chunks, output_filename, skip_chapters, fast, non_interactive):
     total_time = 0
     for i, chunk in enumerate(chunks):
         logger.info(f"Chunks loaded: {len(chunks)}, ready to begin!")
@@ -79,7 +79,7 @@ def rewrite_and_save_chunks(chunks, output_filename, skip_chapters, fast):
         logger.info(
             f"Token count of the chunk to be sent to LLM: {original_token_count}"
         )
-        if not args.non_interactive:
+        if not non_interactive:
             input("Press any key to continue with the next query")
         rewritten_chunk, elapsed_time = query(
             f"""
@@ -111,7 +111,7 @@ def rewrite_and_save_chunks(chunks, output_filename, skip_chapters, fast):
         with open(output_filename, "a+", encoding="utf-8") as output_file:
             output_file.write(f"Chapter {i}\n\n")
             output_file.write(rewritten_chunk + "\n\n")
-        if not args.fast:
+        if not fast:
             logger.info("Chunk written, waiting 30s")
             time.sleep(30)
 
@@ -140,7 +140,7 @@ def main():
     logger.info(f"Number of chunks: {len(chunks)}")
     if not args.non_interactive:
         input("Press any key to continue")
-    rewrite_and_save_chunks(chunks, output_file, skip_chapters, args.fast)
+    rewrite_and_save_chunks(chunks, output_file, skip_chapters, args.fast, args.non_interactive)
 
 
 if __name__ == "__main__":
