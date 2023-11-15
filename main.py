@@ -106,8 +106,8 @@ def rewrite_and_save_chunks(chunks, output_filename, skip_chapters):
         )
         total_time += elapsed_time
         estimated_time = total_time / (i + 1) * len(chunks)
-        logger.info(f"Time elapsed so far: {total_time} seconds")
-        logger.info(f"Estimated total time: {estimated_time} seconds")
+        logger.info(f"Time elapsed so far: {round(total_time)} seconds")
+        logger.info(f"Estimated total time: {round(estimated_time)} seconds")
         with open(output_filename, "a+", encoding="utf-8") as output_file:
             output_file.write(f"Chapter {i}\n\n")
             output_file.write(rewritten_chunk + "\n\n")
