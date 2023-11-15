@@ -74,7 +74,7 @@ def rewrite_and_save_chunks(chunks, output_filename):
            Start of Input Text:
            {chunk}
            End of Input Text.
-
+           
            Length Reduction: Condense the text to make it about 25% shorter than the original.
            Anonymize Names: Replace all personal names with generic ones (e.g., "Dale Carnegie" becomes "John Smith").
            Alter Institutions and Locations: Change the names of specific institutions and locations to more generic or fictional ones (e.g., "University of Chicago" to "University of the Midwest").
@@ -83,8 +83,8 @@ def rewrite_and_save_chunks(chunks, output_filename):
            Maintain Original Tone: Keep the tone of the original text as close as possible.
            Avoid Repetition: Ensure that the rewritten text does not repeat the same points unnecessarily.
            Check for Clarity: Ensure that the rewritten text is clear and easy to understand.
-           Review for Consistency: Make sure that any changes in names or places are consistently applied throughout the text.
-
+           Review for Consistency: Make sure that any changes in names or places are consistently applied throughout the text. 
+           
            Condensed, updated Text:
         """
         )
