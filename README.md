@@ -10,10 +10,22 @@ This tool is designed to process text files, breaking them into manageable chunk
 - Estimating processing time for rewriting tasks
 
 ## Usage
-To use this tool, you need to have Python installed on your system. You can run the program from the command line by providing an input text file:
+To use this tool, you need to have Python installed on your system. You can run the program from the command line with the following syntax:
 
 ```
-python main.py input_file.txt
+python main.py <input_file> [options]
+```
+
+Where `<input_file>` is the path to the text file you want to process, and `[options]` can include the following flags:
+
+- `-ni`, `--non-interactive`: Run in non-interactive mode (skip any input prompts).
+- `--skip-chapters <chapters>`: Comma-separated list of chapter numbers to exclude from processing.
+- `--fast`: Run without artificial delay between processing chunks.
+
+For example:
+
+```
+python main.py input_file.txt --non-interactive --skip-chapters 1,2,3 --fast
 ```
 
 The program will generate a new file with the rewritten content, appending `-new` to the original filename.
