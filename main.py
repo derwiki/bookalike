@@ -67,7 +67,7 @@ def split_into_chunks(text, input_file):
     return chunks
 
 
-def rewrite_and_save_chunks(chunks, output_filename):
+def rewrite_and_save_chunks(chunks, output_filename, skip_chapters):
     total_time = 0
     for i, chunk in enumerate(chunks):
         logger.info(f"Chunks loaded: {len(chunks)}, ready to begin!")
@@ -137,7 +137,7 @@ def main():
     logger.info(f"Number of chunks: {len(chunks)}")
     if not args.non_interactive:
         input("Press any key to continue")
-    rewrite_and_save_chunks(chunks, output_file)
+    rewrite_and_save_chunks(chunks, output_file, skip_chapters)
 
 
 if __name__ == "__main__":
