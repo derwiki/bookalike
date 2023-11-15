@@ -58,6 +58,7 @@ def rewrite_and_save_chunks(chunks, output_filename):
             )
             total_time += elapsed_time
             estimated_time = total_time / (i + 1) * len(chunks)
+            logger.info(f"Time elapsed so far: {total_time} seconds")
             logger.info(f"Estimated total time: {estimated_time} seconds")
             output_file.write(rewritten_chunk + "\n\n")
 
