@@ -85,7 +85,6 @@ def rewrite_and_save_chunks(chunks, output_filename, skip_chapters):
            {chunk}
            End of Input Text.
            
-           Length Reduction: Condense the text to make it about 10% shorter than the original.
            Anonymize Names: Replace all personal names with generic ones (e.g., "Dale Carnegie" becomes "John Smith").
            Alter Institutions and Locations: Change the names of specific institutions and locations to more generic or fictional ones (e.g., "University of Chicago" to "University of the Midwest").
            Modify References to Notable Figures: Replace names of famous historical or public figures with fictional names (e.g., "Franklin D. Roosevelt" becomes "Jane Doe").
@@ -95,10 +94,10 @@ def rewrite_and_save_chunks(chunks, output_filename, skip_chapters):
            Check for Clarity: Ensure that the rewritten text is clear and easy to understand.
            Review for Consistency: Make sure that any changes in names or places are consistently applied throughout the text. 
            
-           Start of Condensed Text:
+           Start of Output Text:
         """
         )
-        rewritten_chunk = rewritten_chunk.replace("End of Condensed Text.", "")
+        rewritten_chunk = rewritten_chunk.replace("End of Output Text.", "")
         rewritten_token_count = len(list(tokenize(rewritten_chunk)))
         logger.info(
             f"Finished rewriting chapter {i + 1}. Original token count: {original_token_count}, Rewritten token count: {rewritten_token_count}"
