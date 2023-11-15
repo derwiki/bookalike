@@ -1,15 +1,17 @@
 import tiktoken
-import openai
+from openai import OpenAI
+
 import logging
 import time
 
+client = OpenAI()
 logger = logging.getLogger(__file__)
 logging.basicConfig(level=logging.INFO)
 
 
 def query(prompt: str) -> tuple[str, float]:
     start_time = time.monotonic()
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4-0611-preview",
         messages=[{"role": "user", "content": prompt}],
         temperature=0,
