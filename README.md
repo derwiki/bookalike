@@ -1,7 +1,10 @@
 # Text Rewriter Tool
 
 ## Overview
-This tool is designed to process text files, breaking them into manageable chunks and rewriting them using OpenAI's GPT-4 model. It aims to condense the text, anonymize names, alter institutions and locations, modify references to notable figures, while preserving the core information and maintaining the original tone.
+
+This tool is designed to process text files, breaking them into manageable chunks and rewriting them using OpenAI's
+GPT-4 model. It aims to condense the text, anonymize names, alter institutions and locations, modify references to
+notable figures, while preserving the core information and maintaining the original tone.
 
 ## Features
 - Chunking large text files into smaller parts
@@ -10,7 +13,9 @@ This tool is designed to process text files, breaking them into manageable chunk
 - Estimating processing time for rewriting tasks
 
 ## Usage
-To use this tool, you need to have Python installed on your system. You can run the program from the command line with the following syntax:
+
+To use this tool, you need to have Python installed on your system. You can run the program from the command line with
+the following syntax:
 
 ```
 python main.py <input_file> [options]
@@ -25,13 +30,13 @@ Where `<input_file>` is the path to the text file you want to process, and `[opt
 For example:
 
 ```
-python main.py input_file.txt --non-interactive --skip-chapters 1,2,3 --fast
+python main.py dracula.txt --non-interactive --skip-chapters 1,2,3 --fast
 ```
 
 The program will generate a new file with the rewritten content, appending `-new` to the original filename.
 
 ## Example
-Here's an example using the first chapter from Dracula, obtained via Project Gutenberg
+Here's an example using the first chapter from Dracula, obtained via Project Gutenberg.
 
 ### Original Text
 ```
@@ -116,13 +121,16 @@ findings here to refresh my memory when I recount my travels to my partner.
 ```
 
 ## Disclaimer
-This tool is intended for legitimate purposes such as creating summaries, anonymizing documents for privacy reasons, or adapting texts for educational use. It is not to be used for illegal activities, including but not limited to copyright infringement or any form of plagiarism. Users are responsible for ensuring that their use of the tool complies with all applicable laws and regulations.
+
+This tool is intended for legitimate purposes such as creating summaries, anonymizing documents for privacy reasons, or
+adapting texts for educational use. It is not to be used for illegal activities, including but not limited to copyright
+infringement or any form of plagiarism. Users are responsible for ensuring that their use of the tool complies with all
+applicable laws and regulations.
 
 ## License
 This project is open-source and available under the MIT License.
 
 ## Contributions
-Contributions to this project are welcome. Please ensure that any contributions adhere to the existing code standards and include appropriate tests.
 
-## Support
-If you encounter any issues or have questions about using this tool, please file an issue on the project's GitHub repository.
+Contributions to this project are welcome. Please ensure that any contributions adhere to the existing code standards
+and include appropriate tests.

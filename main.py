@@ -86,7 +86,8 @@ def rewrite_and_save_chunks(chunks, output_filename, skip_chapters, fast, non_in
            Start of Input Text:
            {chunk}
            End of Input Text.
-           
+
+           Rewrite: rewrite all paragraphs in your own words. Rewritten paragraphs do not necessarily need to have the same number of sentences, but should have the same meaning.
            Anonymize Names: Replace all personal names with generic ones (e.g., "Dale Carnegie" becomes "John Smith").
            Alter Institutions and Locations: Change the names of specific institutions and locations to more generic or fictional ones (e.g., "University of Chicago" to "University of the Midwest").
            Modify References to Notable Figures: Replace names of famous historical or public figures with fictional names (e.g., "Franklin D. Roosevelt" becomes "Jane Doe").
