@@ -111,8 +111,9 @@ def rewrite_and_save_chunks(chunks, output_filename, skip_chapters):
         with open(output_filename, "a+", encoding="utf-8") as output_file:
             output_file.write(f"Chapter {i}\n\n")
             output_file.write(rewritten_chunk + "\n\n")
-        logger.info("Chunk written, waiting 30s")
-        time.sleep(30)
+        if not args.fast:
+            logger.info("Chunk written, waiting 30s")
+            time.sleep(30)
 
 
 def main():
@@ -120,6 +121,7 @@ def main():
     parser.add_argument("input_file", help="The input text file")
     parser.add_argument("-ni", "--non-interactive", action="store_true", help="Run in non-interactive mode (skip any input prompts)")
     parser.add_argument("--skip-chapters", type=str, help="Comma separated list of chapters to exclude")
+    parser.add_argument("--fast", action="store_true", help="Run without artificial delay between chunks")
     args = parser.parse_args()
     skip_chapters = [int(ch) for ch in args.skip_chapters.split(',')] if args.skip_chapters else []
 
