@@ -37,7 +37,7 @@ def tokenize(s: str) -> list:
     return TOKENIZER.encode(s)
 
 
-def split_into_chunks(text):
+def split_into_chunks(text, input_file):
     max_tokens = 64000
     chunks = []
     current_chunk = ""
@@ -61,7 +61,8 @@ def split_into_chunks(text):
             current_chunk += "\n" + line
     if current_chunk:
         chunks.append(current_chunk)
-    with open("htwf-chunks.json", "w") as f:
+    chunk_file = os.path.splitext(input_file)[0] + "-chunks.json"
+    with open(chunk_file, "w") as f:
         json.dump(chunks, f, indent=2)
     return chunks
 
@@ -122,14 +123,17 @@ def main():
     args = parser.parse_args()
 
     input_file = args.input_file
-    output_file = os.path.splitext(input_file)[0] + "-new" + os.path.splitext(input_file)[1]
+    output_file = (
+        os.path.splitext(input_file)[0] + "-new" + os.path.splitext(input_file)[1]
+    )
 
     book = load_book(input_file)
-    if os.path.exists(input_file + "-chunks.json"):
-        with open(input_file + "-chunks.json", "r") as f:
+    chunk_file = os.path.splitext(input_file)[0] + "-chunks.json"
+    if os.path.exists(chunk_file):
+        with open(chunk_file, "r") as f:
             chunks = json.load(f)
     else:
-        chunks = split_into_chunks(book)
+        chunks = split_into_chunks(book, input_file)
     logger.info(f"Number of chunks: {len(chunks)}")
     rewrite_and_save_chunks(chunks, output_file)
 
