@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 def query(prompt: str) -> tuple[str, float]:
     start_time = time.monotonic()
     response = client.chat.completions.create(
-        model="gpt-4-0611-preview",
+        model="gpt-4-1106-preview",
         messages=[{"role": "user", "content": prompt}],
         temperature=0,
     )
