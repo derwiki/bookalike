@@ -52,8 +52,10 @@ def split_into_chunks(text):
 
 def rewrite_and_save_chunks(chunks, output_filename):
     total_time = 0
+    tokenizer = tiktoken.TikToken()
     with open(output_filename, "w", encoding="utf-8") as output_file:
         for i, chunk in enumerate(chunks):
+            original_token_count = len(tokenizer.tokenize(chunk))
             rewritten_chunk, elapsed_time = query(
                 f"""
                 Please rewrite this text in original words, keeping the overall themes, values, lessons the same. 
@@ -63,7 +65,8 @@ def rewrite_and_save_chunks(chunks, output_filename):
                 Text:\n{chunk}
             """
             )
-            logger.info(f"Finished rewriting chapter {i + 1}")
+            rewritten_token_count = len(tokenizer.tokenize(rewritten_chunk))
+            logger.info(f"Finished rewriting chapter {i + 1}. Original token count: {original_token_count}, Rewritten token count: {rewritten_token_count}")
             total_time += elapsed_time
             estimated_time = total_time / (i + 1) * len(chunks)
             logger.info(f"Time elapsed so far: {total_time} seconds")
