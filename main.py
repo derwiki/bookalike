@@ -70,8 +70,8 @@ def split_into_chunks(text, input_file):
 def rewrite_and_save_chunks(chunks, output_filename):
     total_time = 0
     for i, chunk in enumerate(chunks):
+        logger.info(f"Chunks loaded: {len(chunks)}, ready to begin!")
         if i == 0:
-            input(f"Chunks created: {len(chunks)}, press any key to continue")
             logger.info("Skipping 'chapter' before preface")
             continue
 
@@ -114,7 +114,8 @@ def rewrite_and_save_chunks(chunks, output_filename):
         with open(output_filename, "a+", encoding="utf-8") as output_file:
             output_file.write(f"Chapter {i}\n\n")
             output_file.write(rewritten_chunk + "\n\n")
-        input("Chunk written, press any key to continue")
+        logger.info("Chunk written, waiting 30s")
+        time.sleep(30)
 
 
 def main():
