@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 
@@ -116,14 +117,21 @@ def rewrite_and_save_chunks(chunks, output_filename):
 
 
 def main():
-    book = load_book("htwf.txt")
-    if os.path.exists("htwf-chunks.json"):
-        with open("htwf-chunks.json", "r") as f:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input_file", help="The input text file")
+    args = parser.parse_args()
+
+    input_file = args.input_file
+    output_file = os.path.splitext(input_file)[0] + "-new" + os.path.splitext(input_file)[1]
+
+    book = load_book(input_file)
+    if os.path.exists(input_file + "-chunks.json"):
+        with open(input_file + "-chunks.json", "r") as f:
             chunks = json.load(f)
     else:
         chunks = split_into_chunks(book)
     logger.info(f"Number of chunks: {len(chunks)}")
-    rewrite_and_save_chunks(chunks, "htwf-new.txt")
+    rewrite_and_save_chunks(chunks, output_file)
 
 
 if __name__ == "__main__":
