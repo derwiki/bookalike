@@ -1,5 +1,9 @@
 import tiktoken
 import openai
+import logging
+
+logger = logging.getLogger(__file__)
+logging.basicConfig(level=logging.INFO)
 
 
 def query(prompt: str) -> str:
@@ -53,6 +57,7 @@ def rewrite_and_save_chunks(chunks, output_filename):
 def main():
     book = load_book("htwf.txt")
     chunks = split_into_chunks(book)
+    logger.info(f"Number of chunks: {len(chunks)}")
     rewrite_and_save_chunks(chunks, "htwf-new.txt")
 
 
