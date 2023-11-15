@@ -71,12 +71,21 @@ def rewrite_and_save_chunks(chunks, output_filename):
         logger.info(f"Token count of the chunk to be sent to LLM: {original_token_count}")
         rewritten_chunk, elapsed_time = query(
             f"""
-            Please rewrite this text in original words, keeping the overall themes, values, lessons the same. 
-            Ensure the rewritten text is clear, accurate, consistent, relevant, up-to-date, well-written, and not repetitive. 
-            All names should be replaced with new names.
-            Any reference to the author of the book should be replaced with John Smith.
-            Examples should be updated as possible in the context of 2023.
-            Text:\n{chunk}
+           Start of Input Text:
+           {chunk}
+           End of Input Text.
+
+           Length Reduction: Condense the text to make it about 25% shorter than the original.
+           Anonymize Names: Replace all personal names with generic ones (e.g., "Dale Carnegie" becomes "John Smith").
+           Alter Institutions and Locations: Change the names of specific institutions and locations to more generic or fictional ones (e.g., "University of Chicago" to "University of the Midwest").
+           Modify References to Notable Figures: Replace names of famous historical or public figures with fictional names (e.g., "Franklin D. Roosevelt" becomes "Jane Doe").
+           Preserve Core Information: Ensure that the key information and meaning of the text remain intact.
+           Maintain Original Tone: Keep the tone of the original text as close as possible.
+           Avoid Repetition: Ensure that the rewritten text does not repeat the same points unnecessarily.
+           Check for Clarity: Ensure that the rewritten text is clear and easy to understand.
+           Review for Consistency: Make sure that any changes in names or places are consistently applied throughout the text.
+
+           Condensed, updated Text:
         """
         )
         rewritten_token_count = len(list(tokenize(rewritten_chunk)))
