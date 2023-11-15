@@ -43,7 +43,7 @@ def split_into_chunks(text, input_file):
     current_chunk = ""
     import re
 
-    chapter_pattern = re.compile(r"^(\d+)$")
+    chapter_pattern = re.compile(r"^CHAPTER\s+([IVXLCDM]+)$", re.IGNORECASE)
     chapter_count = 0
     for line in text.split("\n"):
         tokens = tokenize(line)
