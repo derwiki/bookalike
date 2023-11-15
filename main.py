@@ -30,16 +30,18 @@ def split_into_chunks(text):
     chunks = []
     current_chunk = ""
     import re
-    chapter_pattern = re.compile(r'^(\d+)$')
+
+    chapter_pattern = re.compile(r"^(\d+)$")
     chapter_count = 0
     for line in text.split("\n"):
         tokens = tokenizer.tokenize(line)
-        if (
-            len(tokens) + len(tokenizer.tokenize(current_chunk)) > max_tokens
-            or chapter_pattern.match(line)
-        ):
+        if len(tokens) + len(
+            tokenizer.tokenize(current_chunk)
+        ) > max_tokens or chapter_pattern.match(line):
             chapter_count += 1
-            logger.info(f"Finished chapter {chapter_count - 1}, starting chapter {chapter_count}")
+            logger.info(
+                f"Finished chapter {chapter_count - 1}, starting chapter {chapter_count}"
+            )
             if current_chunk:
                 chunks.append(current_chunk)
             current_chunk = line
@@ -66,7 +68,9 @@ def rewrite_and_save_chunks(chunks, output_filename):
             """
             )
             rewritten_token_count = len(tokenizer.tokenize(rewritten_chunk))
-            logger.info(f"Finished rewriting chapter {i + 1}. Original token count: {original_token_count}, Rewritten token count: {rewritten_token_count}")
+            logger.info(
+                f"Finished rewriting chapter {i + 1}. Original token count: {original_token_count}, Rewritten token count: {rewritten_token_count}"
+            )
             total_time += elapsed_time
             estimated_time = total_time / (i + 1) * len(chunks)
             logger.info(f"Time elapsed so far: {total_time} seconds")
