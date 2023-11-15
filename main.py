@@ -66,6 +66,7 @@ def rewrite_and_save_chunks(chunks, output_filename):
         if i == 0:
             input(f"Chunks created: {len(chunks)}, press any key to continue")
         original_token_count = len(list(tokenize(chunk)))
+        logger.info(f"Token count of the chunk to be sent to LLM: {original_token_count}")
         rewritten_chunk, elapsed_time = query(
             f"""
             Please rewrite this text in original words, keeping the overall themes, values, lessons the same. 
