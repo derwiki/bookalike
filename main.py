@@ -62,30 +62,30 @@ def split_into_chunks(text):
 
 def rewrite_and_save_chunks(chunks, output_filename):
     total_time = 0
-    with open(output_filename, "w", encoding="utf-8") as output_file:
-        for i, chunk in enumerate(chunks):
-            if i == 0:
-                input(f"Chunks created: {len(chunks)}, press any key to continue")
-            original_token_count = len(list(tokenize(chunk)))
-            rewritten_chunk, elapsed_time = query(
-                f"""
-                Please rewrite this text in original words, keeping the overall themes, values, lessons the same. 
-                Avoid rewriting text that is already well-written, copyrighted, sensitive, controversial, or doesn't need to be rewritten. 
-                Ensure the rewritten text is clear, accurate, consistent, relevant, up-to-date, well-written, and not repetitive. 
-                Examples should be updated. 
-                Text:\n{chunk}
-            """
-            )
-            rewritten_token_count = len(list(tokenize(rewritten_chunk)))
-            logger.info(
-                f"Finished rewriting chapter {i + 1}. Original token count: {original_token_count}, Rewritten token count: {rewritten_token_count}"
-            )
-            total_time += elapsed_time
-            estimated_time = total_time / (i + 1) * len(chunks)
-            logger.info(f"Time elapsed so far: {total_time} seconds")
-            logger.info(f"Estimated total time: {estimated_time} seconds")
+    for i, chunk in enumerate(chunks):
+        if i == 0:
+            input(f"Chunks created: {len(chunks)}, press any key to continue")
+        original_token_count = len(list(tokenize(chunk)))
+        rewritten_chunk, elapsed_time = query(
+            f"""
+            Please rewrite this text in original words, keeping the overall themes, values, lessons the same. 
+            Avoid rewriting text that is already well-written, copyrighted, sensitive, controversial, or doesn't need to be rewritten. 
+            Ensure the rewritten text is clear, accurate, consistent, relevant, up-to-date, well-written, and not repetitive. 
+            Examples should be updated. 
+            Text:\n{chunk}
+        """
+        )
+        rewritten_token_count = len(list(tokenize(rewritten_chunk)))
+        logger.info(
+            f"Finished rewriting chapter {i + 1}. Original token count: {original_token_count}, Rewritten token count: {rewritten_token_count}"
+        )
+        total_time += elapsed_time
+        estimated_time = total_time / (i + 1) * len(chunks)
+        logger.info(f"Time elapsed so far: {total_time} seconds")
+        logger.info(f"Estimated total time: {estimated_time} seconds")
+        with open(output_filename, "a+", encoding="utf-8") as output_file:
             output_file.write(rewritten_chunk + "\n\n")
-            input("Chunk written, press any key to continue")
+        input("Chunk written, press any key to continue")
 
 
 def main():
