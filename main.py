@@ -79,6 +79,8 @@ def rewrite_and_save_chunks(chunks, output_filename, skip_chapters):
         logger.info(
             f"Token count of the chunk to be sent to LLM: {original_token_count}"
         )
+        if not args.non_interactive:
+            input("Press any key to continue with the next query")
         rewritten_chunk, elapsed_time = query(
             f"""
            Start of Input Text:
