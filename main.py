@@ -51,8 +51,10 @@ def rewrite_and_save_chunks(chunks, output_filename):
         for i, chunk in enumerate(chunks):
             rewritten_chunk, elapsed_time = query(
                 f"""
-                Please rewrite this text in original words, keeping the overall themes, values, lessons the same.
-                Examples should be updated.
+                Please rewrite this text in original words, keeping the overall themes, values, lessons the same. 
+                Avoid rewriting text that is already well-written, copyrighted, sensitive, controversial, or doesn't need to be rewritten. 
+                Ensure the rewritten text is clear, accurate, consistent, relevant, up-to-date, well-written, and not repetitive. 
+                Examples should be updated. 
                 Text:\n{chunk}
             """
             )
